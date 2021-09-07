@@ -72,6 +72,25 @@ function updateGameArea () {
   imgCanvasBack.update();
   imgBasketObj.update();//inserta imagen a una frecuencia determinada
   imgBasketObj.newPos();//Actualiza la posición de la canasta
+  ApplesRandom();
+}
+
+//Generación de manzanas
+
+const myApples = [];
+function ApplesRandom () {
+  for (let i = 0; i < myApples.length; i++) {
+    myApples[i].y += 1;
+    myApples[i].update();
+  }
+  myGameArea.frameAppleRed += 1;
+  if (myGameArea.frameAppleRed % 100 == 0) {
+    let minWidth = 0;
+    let maxWidth = 1150;
+    let width =  Math.floor(Math.random() * (maxWidth - minWidth));
+
+    myApples.push (new Components(width, -50, myGameArea.imgAppleRed, 50, 50))
+  }
 }
 
 //Inicialización de clase Constructor con imágenes
