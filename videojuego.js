@@ -69,12 +69,13 @@ class Components {
 
 function updateGameArea () {
   myGameArea.clear(); //Limpia canvas
+  imgCanvasBack.update();
   imgBasketObj.update();//inserta imagen a una frecuencia determinada
   imgBasketObj.newPos();//Actualiza la posición de la canasta
 }
 
 //Inicialización de clase Constructor con imágenes
-
+const imgCanvasBack = new Components (0, 0, myGameArea.imgCanvasBack, 1200, 600)
 const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
 
 //Movimiento de la canasta

@@ -44,7 +44,6 @@ h2, p {
     margin: 8px;
     background-color: #ffffff;
     border: 2px solid rgb(83, 46, 0);
-    padding: 15px 32px;
     opacity: 0.8;
     height: 200;
   }
@@ -53,8 +52,13 @@ h2, p {
       align-items: center;
       justify-content: center;
   }
-
   #canvas1 {
       border: 1px solid black;
       background-color: white;
+  }
+  section {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
   }
