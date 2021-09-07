@@ -26,6 +26,8 @@ const myGameArea = {
   imgAppleRotten : './images/badapple.png',
   imgAppleGold : './images/golden-apple.png',
   imgCanvasBack : './images/fondo.png',
+  imgLives : './images/heart.png',
+  lives : 5,
   board : function () {
     this.canvas.width = 1200;
     this.canvas.height = 600;
@@ -37,8 +39,8 @@ const myGameArea = {
   },
 
   clear : function () {
-    context.clearRect(0, 0, canvas.width, canvas.height )
-  }
+    context.clearRect(0, 0, canvas.width, canvas.height );
+  },
 }
 
 class Components {
@@ -62,14 +64,14 @@ class Components {
   newPos () {
     this.x += this.speedX;
   }
-
+  
 }
 
 //Motor del juego
-
 function updateGameArea () {
   myGameArea.clear(); //Limpia canvas
-  imgCanvasBack.update();
+  imgCanvasBack.update();//inserta imagen de inicio en el fondo
+  drawLives(myGameArea.lives)//llama a función con # de vidas
   imgBasketObj.update();//inserta imagen a una frecuencia determinada
   imgBasketObj.newPos();//Actualiza la posición de la canasta
   ApplesRandom();
@@ -93,9 +95,20 @@ function ApplesRandom () {
   }
 }
 
+//Generador de imágenes de vidas
+function drawLives(lives) {
+for (let i = 0; i < lives; i++ ) {
+const imgLivesObj = new Components (1150-i*50 ,0, myGameArea.imgLives, 50, 50);
+imgLivesObj.update()
+}
+}
+
 //Inicialización de clase Constructor con imágenes
 const imgCanvasBack = new Components (0, 0, myGameArea.imgCanvasBack, 1200, 600)
 const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
+//const imgLivesObj = new Components (1100, 0, myGameArea.imgLives, 50, 50);
+
+
 
 //Movimiento de la canasta
 
