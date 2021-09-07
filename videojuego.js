@@ -4,27 +4,97 @@ let instrucciones = document.getElementById('instrucciones');
 
 const startGameButtom = document.getElementById('inicio');
 
- if (startGameButtom) {
+if (startGameButtom) {
   startGameButtom.addEventListener('click', e =>{
     while (instrucciones.hasChildNodes()) {
     instrucciones.removeChild(instrucciones.firstChild)
     }
+    myGameArea.board();
     myGameArea.start();
   })
- }
- const myGameArea = {
-   canvas : canvas,
-   context : context,
-   start : function () {
-     this.canvas.width = 480;
-     this.canvas.height = 480;
-     this.canvas.border = '1px solid black'
-     this.img = new Image();
-     this.img.src = "/images/fondo.png";
-     instrucciones.appendChild(this.canvas);
-    }
+}
+
+//Objeto que almacena la función de aparición del canvas, datos de las imagenes, así como la frecuencia de imagenes
+const myGameArea = {
+  canvas : canvas,
+  context : context,
+  frameAppleRed : 0,
+  frameAppleGold : 0,
+  frameAppleRotten : 0,
+  imgBasket : './images/basket.png',
+  imgAppleRed : './images/manzana.png',
+  imgAppleRotten : './images/badapple.png',
+  imgAppleGold : './images/golden-apple.png',
+  imgCanvasBack : './images/fondo.png',
+  board : function () {
+    this.canvas.width = 1200;
+    this.canvas.height = 600;
+    canvas.setAttribute('id', 'canvas1')
+    instrucciones.appendChild(this.canvas);
+  },
+  start : function () {
+    this.interval = setInterval(updateGameArea, 1000/60);
+  },
+
+  clear : function () {
+    context.clearRect(0, 0, canvas.width, canvas.height )
   }
-  document.addEventListener("click", (e) => {
-    this.img = new Image();
-    this.img.src = "/images/fondo.png";
-  })
+}
+
+class Components {
+  constructor (x, y, imgLink, width, height) {
+    this.width = width;
+    this.height = height;
+    this.imgLink = imgLink;
+    this.x = x;
+    this.y = y;
+    this.speedX = 0;
+  }
+   //Metodos para la impresión de imagenes en el canvas.
+  update () {
+    const ctx = myGameArea.context;
+    let img = new Image();
+    img.src = this.imgLink;
+    ctx.drawImage(img, this.x, this.y, this.width, this.height);
+  }
+
+  //Movimiento de la canasta (horizontal)
+  newPos () {
+    this.x += this.speedX;
+  }
+
+}
+
+//Motor del juego
+
+function updateGameArea () {
+  myGameArea.clear(); //Limpia canvas
+  imgBasketObj.update();//inserta imagen a una frecuencia determinada
+  imgBasketObj.newPos();//Actualiza la posición de la canasta
+}
+
+//Inicialización de clase Constructor con imágenes
+
+const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
+
+//Movimiento de la canasta
+
+document.addEventListener('keydown', (e) => {
+  switch (e.keyCode) {
+    //Mueve a izquierda
+    case 37:
+      imgBasketObj.speedX -= 2;
+  console.log('siiii');
+
+    break;
+    case 39:
+      imgBasketObj.speedX += 2;
+    break;
+  }
+});
+
+//Paro en seco al desoprimir flechas
+
+document.addEventListener('keyup', (e) => {
+  imgBasketObj.speedX = 0;
+})
