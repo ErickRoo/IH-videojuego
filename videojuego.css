@@ -1,0 +1,58 @@
+/*CSS*/
+html {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    color: rgb(83, 46, 0);
+    background-image: url("./images/instrucciones.jpeg");
+    background-size: cover;
+}
+h1 {
+    font-size: 30px;
+    text-align: center;
+    text-shadow: rgb(168, 138, 16) 1px 0 10px;
+}
+h2, p {
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    text-shadow: rgb(71, 58, 4) 1px 0 10px;
+}
+#instrucciones ul li{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content:center;
+    font-size: 16px;
+    text-shadow: rgb(75, 61, 5) 1px 0 10px;
+    margin: 2%;
+    font-weight: bold;
+    color: rgb(46, 26, 2);
+    line-height: 20pt;
+}
+#inicio {
+    background-color: #ff0707; 
+    border: 1px solid white;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+  div.transbox {
+    margin: 8px;
+    background-color: #ffffff;
+    border: 2px solid rgb(83, 46, 0);
+    padding: 15px 32px;
+    opacity: 0.8;
+    height: 200;
+  }
+  .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+#canvas{
+background-image: url("./images/fondo.png");
+}
