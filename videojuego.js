@@ -21,6 +21,7 @@ const myGameArea = {
   frameAppleRed : 0,
   frameAppleGold : 0,
   frameAppleRotten : 0,
+  applesTotal: 0,
   imgBasket : './images/basket.png',
   imgAppleRed : './images/manzana.png',
   imgAppleRotten : './images/badapple.png',
@@ -41,6 +42,11 @@ const myGameArea = {
   clear : function () {
     context.clearRect(0, 0, canvas.width, canvas.height );
   },
+  score: function () {
+    this.context.font = '20px serif',
+    this.context.fillStyle = 'black',
+    this.context.fillText(`${this.applesTotal}`, 0, 0)
+},
 }
 
 class Components {
@@ -64,7 +70,40 @@ class Components {
   newPos () {
     this.x += this.speedX;
   }
-  
+  //Métodos para colisión
+  left() {
+    return this.x
+}
+
+right() {
+    return this.x + this.width
+}
+
+top() {
+    return this.y
+}
+
+bottom() {
+    return this.y + this.height 
+}
+
+crashWith(apples) {
+  return !(
+      this.bottom() < apples.top() ||
+      this.top() > apples.bottom() ||
+      this.right() < apples.left() ||
+      this.left() > apples.right()
+  )
+}
+}
+
+//Función conteo de manzanas atrapadas
+function applesCatches () {
+  myApples.some((apples) => {
+    if(imgBasketObj.crashWith(apples)) { 
+      myApples.applesTotal +=1
+    }
+  })
 }
 
 //Motor del juego
@@ -74,7 +113,11 @@ function updateGameArea () {
   drawLives(myGameArea.lives)//llama a función con # de vidas
   imgBasketObj.update();//inserta imagen a una frecuencia determinada
   imgBasketObj.newPos();//Actualiza la posición de la canasta
-  ApplesRandom();
+  ApplesRandom(); //Caen manzanas del cielo
+  RottenRandom(); //Caen manzanas podridas del cielo
+  GoldenRandom() //Caen manzanas doradas del cielo
+  imgAppleRed.update(); // Imagen de manzana esq. sup. izq.
+  myGameArea.score()
 }
 
 //Generación de manzanas
@@ -94,6 +137,40 @@ function ApplesRandom () {
     myApples.push (new Components(width, -50, myGameArea.imgAppleRed, 50, 50))
   }
 }
+//Generación de manzanas podridas
+const rottenApples = [];
+function RottenRandom () {
+  for (let i = 0; i < rottenApples.length; i++) {
+    rottenApples[i].y += 1;
+    rottenApples[i].update();
+  }
+  myGameArea.frameAppleRotten += 1;
+  if (myGameArea.frameAppleRotten % 200 === 0) {
+    let minWidth = 100;
+    let maxWidth = 1100;
+    let width =  Math.floor(Math.random() * (maxWidth - minWidth));
+
+    rottenApples.push (new Components(width, -100, myGameArea.imgAppleRotten, 50, 50))
+  }
+}
+// Generación manzanas doradas
+const goldenApples = [];
+function GoldenRandom () {
+  for (let i = 0; i < goldenApples.length; i++) {
+    goldenApples[i].y += 1;
+    goldenApples[i].update();
+  }
+  myGameArea.frameAppleGold += 1;
+  if (myGameArea.frameAppleGold % 2100 === 0) {
+    let minWidth = 20;
+    let maxWidth = 1180;
+    let width =  Math.floor(Math.random() * (maxWidth - minWidth));
+
+    goldenApples.push (new Components(width, -20, myGameArea.imgAppleGold, 50, 50))
+    lives +=1
+  }
+}
+
 
 //Generador de imágenes de vidas
 function drawLives(lives) {
@@ -103,6 +180,7 @@ imgLivesObj.update()
 }
 }
 
+
 //Inicialización de clase Constructor con imágenes
 const imgCanvasBack = new Components (0, 0, myGameArea.imgCanvasBack, 1200, 600)
 const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
@@ -111,7 +189,6 @@ const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
 
 
 //Movimiento de la canasta
-
 document.addEventListener('keydown', (e) => {
   switch (e.keyCode) {
     //Mueve a izquierda
@@ -127,7 +204,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 //Paro en seco al desoprimir flechas
-
 document.addEventListener('keyup', (e) => {
   imgBasketObj.speedX = 0;
 })
+
