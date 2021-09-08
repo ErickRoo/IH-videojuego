@@ -41,11 +41,11 @@ const myGameArea = {
   clear : function () {
     context.clearRect(0, 0, canvas.width, canvas.height );
   },
-  score: function () {
-    this.context.font = '20px serif',
-    this.context.fillStyle = 'black',
-    this.context.fillText(`${this.applesRedTotal}`, 0, 0)
-},
+  score : function () {
+    this.context.font = '40px serif',
+    this.context.fillStyle = 'white',
+    this.context.fillText(` x ${this.applesRedTotal}`, 0, 60)
+  },
 }
 
 class Components {
@@ -111,6 +111,7 @@ function updateGameArea () {
   deleteApples(rottenApples);
   deleteApples(goldenApples);
   applesCatches(myApples, imgBasketObj);
+  imgOneAppleRed.update();
   myGameArea.score();
 }
 
@@ -198,6 +199,7 @@ function applesCatches (arrApples, imgObj) {
 //Inicialización de clase Constructor con imágenes
 const imgCanvasBack = new Components (0, 0, myGameArea.imgCanvasBack, 1200, 600)
 const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
+const imgOneAppleRed = new Components (0, 0, myGameArea.imgAppleRed, 80, 80);
 
 
 
