@@ -139,11 +139,11 @@ function RottenRandom () {
   }
   myGameArea.frameAppleRotten += 1;
   if (myGameArea.frameAppleRotten % 200 === 0) {
-    let minWidth = 100;
-    let maxWidth = 1100;
+    let minWidth = 0;
+    let maxWidth = 1150;
     let width =  Math.floor(Math.random() * (maxWidth - minWidth));
 
-    rottenApples.push (new Components(width, -100, myGameArea.imgAppleRotten, 50, 50))
+    rottenApples.push (new Components(width, -10, myGameArea.imgAppleRotten, 50, 50))
   }
 }
 // Generación manzanas doradas
@@ -155,12 +155,11 @@ function GoldenRandom () {
   }
   myGameArea.frameAppleGold += 1;
   if (myGameArea.frameAppleGold % 2100 === 0) {
-    let minWidth = 20;
-    let maxWidth = 1180;
+    let minWidth = 0;
+    let maxWidth = 1150;
     let width =  Math.floor(Math.random() * (maxWidth - minWidth));
 
-    goldenApples.push (new Components(width, -20, myGameArea.imgAppleGold, 50, 50))
-    lives +=1
+    goldenApples.push (new Components(width, -10, myGameArea.imgAppleGold, 50, 50))
   }
 }
 
@@ -187,29 +186,23 @@ function drawLives(lives) {
 //Función conteo de manzanas atrapadas
  const appleInBasket = [];
 function applesCatches (arrApples, imgObj) {
-  // console.log(arrApples.length);
-  const touch = arrApples.some((apples) => {
+    let collisionCount = 0;
+    for(let i=0; i< arrApples.length;) {
+      applesCatches.removeChild(myApples[i]);
+}
+}
+/*  const touch = arrApples.some((apples) => {
       return imgObj.crashWith(apples)
-
-    // for (let i = 0; i < arrApples.length; i++) {
-    //   if (imgObj.crashWith(apples) == true) {
-    //     appleInBasket.push(arrApples[i])
-    //     arrApples.splice(i, 1)
-    //     // myGameArea.applesTotal += 1;
-    //     console.log(appleInBasket.length)
-    //   }
-    // }
   })
   for (let i = 0; i < arrApples.length; i++) {
     if (touch) {
       appleInBasket.push(arrApples[i])
       arrApples.splice(i, 1)
-      // myGameArea.applesTotal += 1;
       console.log(appleInBasket.length)
     }
   }
 }
-
+*/
 
 //Inicialización de clase Constructor con imágenes
 const imgCanvasBack = new Components (0, 0, myGameArea.imgCanvasBack, 1200, 600)
