@@ -21,6 +21,8 @@ const myGameArea = {
   frameAppleGold : 0,
   frameAppleRotten : 0,
   applesRedTotal : 0,
+  applesRottenTotal : 0,
+  applesGoldTotal : 0,
   imgBasket : './images/basket.png',
   imgAppleRed : './images/manzana.png',
   imgAppleRotten : './images/badapple.png',
@@ -111,6 +113,8 @@ function updateGameArea () {
   deleteApples(rottenApples);
   deleteApples(goldenApples);
   applesCatches(myApples, imgBasketObj);
+  applesCatches(rottenApples, imgBasketObj);
+  applesCatches(goldenApples, imgBasketObj);
   imgOneAppleRed.update();
   myGameArea.score();
 }
@@ -170,7 +174,7 @@ function GoldenRandom () {
 
 function deleteApples (arrApples) {
   for (let i = 0; i < arrApples.length; i++) {
-    if (arrApples[i].y + arrApples[i].height + 10 > myGameArea.canvas.height) {
+    if (arrApples[i].y > myGameArea.canvas.height) {
       arrApples.splice(i, 1)
     }
   }
@@ -190,7 +194,24 @@ function applesCatches (arrApples, imgObj) {
   for (let i = 0; i < arrApples.length; i++) {
     if (imgObj.crashWith(arrApples[i])) {
       arrApples.splice(i, 1)
-      myGameArea.applesRedTotal += 1;
+
+      switch (arrApples) {
+        case myApples:
+          myGameArea.applesRedTotal += 1;
+        break;
+
+        case rottenApples:
+          myGameArea.applesRottenTotal +=1;
+          myGameArea.lives -= 1;
+        break;
+
+        case goldenApples:
+          myGameArea.applesGoldTotal +=1;
+          if (myGameArea.lives < 5) {
+            myGameArea.lives += 1;
+          }
+        break;
+      }
     }
   }
 }
