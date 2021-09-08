@@ -187,14 +187,29 @@ function drawLives(lives) {
 
 //Función conteo de manzanas atrapadas
 function applesCatches (arrApples, imgObj) {
+<<<<<<< HEAD
+    let collisionCount = 0;
+    for(let i=0; i< arrApples.length;) {
+      applesCatches.removeChild(myApples[i]);
+}
+}
+/*  const touch = arrApples.some((apples) => {
+      return imgObj.crashWith(apples)
+  })
+=======
+>>>>>>> 9a48590c761160ff0c8cbf3b9508766a6c95d415
   for (let i = 0; i < arrApples.length; i++) {
     if (imgObj.crashWith(arrApples[i])) {
       arrApples.splice(i, 1)
+<<<<<<< HEAD
+      console.log(appleInBasket.length)
+=======
       myGameArea.applesRedTotal += 1;
+>>>>>>> 9a48590c761160ff0c8cbf3b9508766a6c95d415
     }
   }
 }
-
+*/
 
 //Inicialización de clase Constructor con imágenes
 const imgCanvasBack = new Components (0, 0, myGameArea.imgCanvasBack, 1200, 600)
