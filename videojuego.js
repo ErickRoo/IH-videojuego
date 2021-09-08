@@ -42,7 +42,7 @@ const myGameArea = {
     context.clearRect(0, 0, canvas.width, canvas.height );
   },
   score : function () {
-    this.context.font = '40px serif',
+    this.context.font = '35px serif',
     this.context.fillStyle = 'white',
     this.context.fillText(` x ${this.applesRedTotal}`, 0, 60)
   },
@@ -106,7 +106,7 @@ function updateGameArea () {
   imgBasketObj.newPos();//Actualiza la posición de la canasta
   ApplesRandom();//Función imprime manzanas aleatoramiente
   RottenRandom(); //Caen manzanas podridas del cielo
-  GoldenRandom() //Caen manzanas doradas del cielo
+  GoldenRandom(); //Caen manzanas doradas del cielo
   deleteApples(myApples);
   deleteApples(rottenApples);
   deleteApples(goldenApples);
@@ -187,29 +187,13 @@ function drawLives(lives) {
 
 //Función conteo de manzanas atrapadas
 function applesCatches (arrApples, imgObj) {
-<<<<<<< HEAD
-    let collisionCount = 0;
-    for(let i=0; i< arrApples.length;) {
-      applesCatches.removeChild(myApples[i]);
-}
-}
-/*  const touch = arrApples.some((apples) => {
-      return imgObj.crashWith(apples)
-  })
-=======
->>>>>>> 9a48590c761160ff0c8cbf3b9508766a6c95d415
   for (let i = 0; i < arrApples.length; i++) {
     if (imgObj.crashWith(arrApples[i])) {
       arrApples.splice(i, 1)
-<<<<<<< HEAD
-      console.log(appleInBasket.length)
-=======
       myGameArea.applesRedTotal += 1;
->>>>>>> 9a48590c761160ff0c8cbf3b9508766a6c95d415
     }
   }
 }
-*/
 
 //Inicialización de clase Constructor con imágenes
 const imgCanvasBack = new Components (0, 0, myGameArea.imgCanvasBack, 1200, 600)
