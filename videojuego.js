@@ -143,7 +143,7 @@ function RottenRandom () {
     rottenApples[i].y += 1;
     rottenApples[i].update();
   }
-  myGameArea.frameAppleRotten += 1;
+  myGameArea.frameAppleRotten += 5;
   if (myGameArea.frameAppleRotten % 200 === 0) {
     let minWidth = 0;
     let maxWidth = 1150;
@@ -251,4 +251,3 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keyup', (e) => {
   imgBasketObj.speedX = 0;
 })
-
