@@ -3,7 +3,6 @@ let context = canvas.getContext('2d');
 let instrucciones = document.getElementById('instrucciones');
 
 const startGameButtom = document.getElementById('inicio');
-
 if (startGameButtom) {
   startGameButtom.addEventListener('click', e =>{
     while (instrucciones.hasChildNodes()) {
@@ -21,6 +20,7 @@ const myGameArea = {
   frameAppleRed : 0,
   frameAppleGold : 0,
   frameAppleRotten : 0,
+  applesTotal : 0,
   imgBasket : './images/basket.png',
   imgAppleRed : './images/manzana.png',
   imgAppleRotten : './images/badapple.png',
@@ -41,6 +41,12 @@ const myGameArea = {
   clear : function () {
     context.clearRect(0, 0, canvas.width, canvas.height );
   },
+
+  score: function () {
+    this.context.font = '20px serif',
+    this.context.fillStyle = 'black',
+    this.context.fillText(`${this.applesTotal}`, 0, 0)
+},
 }
 
 class Components {
@@ -64,7 +70,32 @@ class Components {
   newPos () {
     this.x += this.speedX;
   }
+
+  //Métodos para colisión (atrapar manzanas)
+  left() {
+    return this.x
+  }
+
+  right() {
+    return this.x + this.width
+  }
+
+  top() {
+    return this.y
+  }
+
+  bottom() {
+    return this.y + this.height 
+  }
   
+  //Metodo para conteo de manzanas
+  crashWith(apples) {
+    return !(
+      this.bottom() < apples.top() || 
+      this.top() > apples.bottom() || 
+      this.right() < apples.left() ||
+      this.left() > apples.right()); 
+  }
 }
 
 //Motor del juego
@@ -72,9 +103,13 @@ function updateGameArea () {
   myGameArea.clear(); //Limpia canvas
   imgCanvasBack.update();//inserta imagen de inicio en el fondo
   drawLives(myGameArea.lives)//llama a función con # de vidas
+  // imgApple.update();
   imgBasketObj.update();//inserta imagen a una frecuencia determinada
   imgBasketObj.newPos();//Actualiza la posición de la canasta
-  ApplesRandom();
+  ApplesRandom();//Función imprime manzanas aleatoramiente
+  deleteApples(myApples);
+  applesCatches(myApples, imgBasketObj);
+  // console.log(myGameArea.applesTotal);
 }
 
 //Generación de manzanas
@@ -86,27 +121,63 @@ function ApplesRandom () {
     myApples[i].update();
   }
   myGameArea.frameAppleRed += 1;
-  if (myGameArea.frameAppleRed % 100 == 0) {
+  if (myGameArea.frameAppleRed % 150 == 0) {
     let minWidth = 0;
     let maxWidth = 1150;
     let width =  Math.floor(Math.random() * (maxWidth - minWidth));
 
-    myApples.push (new Components(width, -50, myGameArea.imgAppleRed, 50, 50))
+    myApples.push (new Components(width, -10, myGameArea.imgAppleRed, 50, 50))
   }
 }
 
+//Función borrar manzanas fuera del canvas
+
+function deleteApples (arrApples) {
+  for (let i = 0; i < arrApples.length; i++) {
+    if (arrApples[i].y + arrApples[i].height + 10 > myGameArea.canvas.height) {
+      arrApples.splice(i, 1)
+    }
+  }
+}
+
+
 //Generador de imágenes de vidas
 function drawLives(lives) {
-for (let i = 0; i < lives; i++ ) {
-const imgLivesObj = new Components (1150-i*50 ,0, myGameArea.imgLives, 50, 50);
-imgLivesObj.update()
+  for (let i = 0; i < lives; i++ ) {
+  const imgLivesObj = new Components (1150 - i * 50 , 0, myGameArea.imgLives, 50, 50);
+  imgLivesObj.update()
+  }
 }
+
+//Función conteo de manzanas atrapadas
+ const appleInBasket = [];
+function applesCatches (arrApples, imgObj) {
+  // console.log(arrApples.length);
+  const touch = arrApples.some((apples) => {
+      return imgObj.crashWith(apples)
+
+    // for (let i = 0; i < arrApples.length; i++) {
+    //   if (imgObj.crashWith(apples) == true) {
+    //     appleInBasket.push(arrApples[i])
+    //     arrApples.splice(i, 1)
+    //     // myGameArea.applesTotal += 1;
+    //     console.log(appleInBasket.length)
+    //   }
+    // }
+  })
+  for (let i = 0; i < arrApples.length; i++) {
+    if (touch) {
+      appleInBasket.push(arrApples[i])
+      arrApples.splice(i, 1)
+      // myGameArea.applesTotal += 1;
+      console.log(appleInBasket.length)
+    }
+  }
 }
 
 //Inicialización de clase Constructor con imágenes
 const imgCanvasBack = new Components (0, 0, myGameArea.imgCanvasBack, 1200, 600)
 const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
-//const imgLivesObj = new Components (1100, 0, myGameArea.imgLives, 50, 50);
 
 
 
@@ -116,12 +187,21 @@ document.addEventListener('keydown', (e) => {
   switch (e.keyCode) {
     //Mueve a izquierda
     case 37:
-      imgBasketObj.speedX -= 2;
-  console.log('siiii');
+      if (imgBasketObj.x < 2) {
+        imgBasketObj.speedX = 0;
+        imgBasketObj.x = 0;
+      }else {
+        imgBasketObj.speedX -= 2;
+      }
 
     break;
     case 39:
-      imgBasketObj.speedX += 2;
+      if (imgBasketObj.x > myGameArea.canvas.width -102) {
+        imgBasketObj.speedX = 0;
+        imgBasketObj.x = myGameArea.canvas.width - 100;
+      }else {
+        imgBasketObj.speedX += 2;
+      }
     break;
   }
 });
