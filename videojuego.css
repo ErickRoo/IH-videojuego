@@ -62,3 +62,9 @@ h2, p {
     align-content: center;
     flex-direction: column;
   }
+  #audio {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    opacity: 0.2;
+    }
