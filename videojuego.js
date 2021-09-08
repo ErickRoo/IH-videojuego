@@ -41,7 +41,6 @@ const myGameArea = {
   clear : function () {
     context.clearRect(0, 0, canvas.width, canvas.height );
   },
-
   score: function () {
     this.context.font = '20px serif',
     this.context.fillStyle = 'black',
@@ -107,6 +106,8 @@ function updateGameArea () {
   imgBasketObj.update();//inserta imagen a una frecuencia determinada
   imgBasketObj.newPos();//Actualiza la posición de la canasta
   ApplesRandom();//Función imprime manzanas aleatoramiente
+  RottenRandom(); //Caen manzanas podridas del cielo
+  GoldenRandom() //Caen manzanas doradas del cielo
   deleteApples(myApples);
   applesCatches(myApples, imgBasketObj);
   // console.log(myGameArea.applesTotal);
@@ -129,6 +130,40 @@ function ApplesRandom () {
     myApples.push (new Components(width, -10, myGameArea.imgAppleRed, 50, 50))
   }
 }
+//Generación de manzanas podridas
+const rottenApples = [];
+function RottenRandom () {
+  for (let i = 0; i < rottenApples.length; i++) {
+    rottenApples[i].y += 1;
+    rottenApples[i].update();
+  }
+  myGameArea.frameAppleRotten += 1;
+  if (myGameArea.frameAppleRotten % 200 === 0) {
+    let minWidth = 100;
+    let maxWidth = 1100;
+    let width =  Math.floor(Math.random() * (maxWidth - minWidth));
+
+    rottenApples.push (new Components(width, -100, myGameArea.imgAppleRotten, 50, 50))
+  }
+}
+// Generación manzanas doradas
+const goldenApples = [];
+function GoldenRandom () {
+  for (let i = 0; i < goldenApples.length; i++) {
+    goldenApples[i].y += 1;
+    goldenApples[i].update();
+  }
+  myGameArea.frameAppleGold += 1;
+  if (myGameArea.frameAppleGold % 2100 === 0) {
+    let minWidth = 20;
+    let maxWidth = 1180;
+    let width =  Math.floor(Math.random() * (maxWidth - minWidth));
+
+    goldenApples.push (new Components(width, -20, myGameArea.imgAppleGold, 50, 50))
+    lives +=1
+  }
+}
+
 
 //Función borrar manzanas fuera del canvas
 
@@ -175,6 +210,7 @@ function applesCatches (arrApples, imgObj) {
   }
 }
 
+
 //Inicialización de clase Constructor con imágenes
 const imgCanvasBack = new Components (0, 0, myGameArea.imgCanvasBack, 1200, 600)
 const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
@@ -182,7 +218,6 @@ const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
 
 
 //Movimiento de la canasta
-
 document.addEventListener('keydown', (e) => {
   switch (e.keyCode) {
     //Mueve a izquierda
@@ -207,7 +242,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 //Paro en seco al desoprimir flechas
-
 document.addEventListener('keyup', (e) => {
   imgBasketObj.speedX = 0;
 })
+
