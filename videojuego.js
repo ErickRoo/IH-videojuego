@@ -20,7 +20,7 @@ const myGameArea = {
   frameAppleRed : 0,
   frameAppleGold : 0,
   frameAppleRotten : 0,
-  applesTotal : 0,
+  applesRedTotal : 0,
   imgBasket : './images/basket.png',
   imgAppleRed : './images/manzana.png',
   imgAppleRotten : './images/badapple.png',
@@ -44,7 +44,7 @@ const myGameArea = {
   score: function () {
     this.context.font = '20px serif',
     this.context.fillStyle = 'black',
-    this.context.fillText(`${this.applesTotal}`, 0, 0)
+    this.context.fillText(`${this.applesRedTotal}`, 0, 0)
 },
 }
 
@@ -84,16 +84,16 @@ class Components {
   }
 
   bottom() {
-    return this.y + this.height 
+    return this.y + this.height
   }
-  
+
   //Metodo para conteo de manzanas
   crashWith(apples) {
     return !(
-      this.bottom() < apples.top() || 
-      this.top() > apples.bottom() || 
+      this.bottom() < apples.top() ||
+      this.top() > apples.bottom() ||
       this.right() < apples.left() ||
-      this.left() > apples.right()); 
+      this.left() > apples.right());
   }
 }
 
@@ -102,15 +102,16 @@ function updateGameArea () {
   myGameArea.clear(); //Limpia canvas
   imgCanvasBack.update();//inserta imagen de inicio en el fondo
   drawLives(myGameArea.lives)//llama a función con # de vidas
-  // imgApple.update();
   imgBasketObj.update();//inserta imagen a una frecuencia determinada
   imgBasketObj.newPos();//Actualiza la posición de la canasta
   ApplesRandom();//Función imprime manzanas aleatoramiente
   RottenRandom(); //Caen manzanas podridas del cielo
   GoldenRandom() //Caen manzanas doradas del cielo
   deleteApples(myApples);
+  deleteApples(rottenApples);
+  deleteApples(goldenApples);
   applesCatches(myApples, imgBasketObj);
-  // console.log(myGameArea.applesTotal);
+  myGameArea.score();
 }
 
 //Generación de manzanas
@@ -139,11 +140,11 @@ function RottenRandom () {
   }
   myGameArea.frameAppleRotten += 1;
   if (myGameArea.frameAppleRotten % 200 === 0) {
-    let minWidth = 100;
-    let maxWidth = 1100;
+    let minWidth = 0;
+    let maxWidth = 1150;
     let width =  Math.floor(Math.random() * (maxWidth - minWidth));
 
-    rottenApples.push (new Components(width, -100, myGameArea.imgAppleRotten, 50, 50))
+    rottenApples.push (new Components(width, -10, myGameArea.imgAppleRotten, 50, 50))
   }
 }
 // Generación manzanas doradas
@@ -155,12 +156,11 @@ function GoldenRandom () {
   }
   myGameArea.frameAppleGold += 1;
   if (myGameArea.frameAppleGold % 2100 === 0) {
-    let minWidth = 20;
-    let maxWidth = 1180;
+    let minWidth = 0;
+    let maxWidth = 1150;
     let width =  Math.floor(Math.random() * (maxWidth - minWidth));
 
-    goldenApples.push (new Components(width, -20, myGameArea.imgAppleGold, 50, 50))
-    lives +=1
+    goldenApples.push (new Components(width, -10, myGameArea.imgAppleGold, 50, 50))
   }
 }
 
@@ -185,27 +185,11 @@ function drawLives(lives) {
 }
 
 //Función conteo de manzanas atrapadas
- const appleInBasket = [];
 function applesCatches (arrApples, imgObj) {
-  // console.log(arrApples.length);
-  const touch = arrApples.some((apples) => {
-      return imgObj.crashWith(apples)
-
-    // for (let i = 0; i < arrApples.length; i++) {
-    //   if (imgObj.crashWith(apples) == true) {
-    //     appleInBasket.push(arrApples[i])
-    //     arrApples.splice(i, 1)
-    //     // myGameArea.applesTotal += 1;
-    //     console.log(appleInBasket.length)
-    //   }
-    // }
-  })
   for (let i = 0; i < arrApples.length; i++) {
-    if (touch) {
-      appleInBasket.push(arrApples[i])
+    if (imgObj.crashWith(arrApples[i])) {
       arrApples.splice(i, 1)
-      // myGameArea.applesTotal += 1;
-      console.log(appleInBasket.length)
+      myGameArea.applesRedTotal += 1;
     }
   }
 }
