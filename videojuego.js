@@ -102,7 +102,6 @@ class Components {
 //Motor del juego
 function updateGameArea () {
   myGameArea.clear(); //Limpia canvas
-  imgCanvasBack.update();//inserta imagen de inicio en el fondo
   drawLives(myGameArea.lives)//llama a función con # de vidas
   imgBasketObj.update();//inserta imagen a una frecuencia determinada
   imgBasketObj.newPos();//Actualiza la posición de la canasta
@@ -217,7 +216,6 @@ function applesCatches (arrApples, imgObj) {
 }
 
 //Inicialización de clase Constructor con imágenes
-const imgCanvasBack = new Components (0, 0, myGameArea.imgCanvasBack, 1200, 600)
 const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
 const imgOneAppleRed = new Components (0, 0, myGameArea.imgAppleRed, 80, 80);
 
