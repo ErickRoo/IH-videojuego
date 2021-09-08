@@ -20,7 +20,7 @@ const myGameArea = {
   frameAppleRed : 0,
   frameAppleGold : 0,
   frameAppleRotten : 0,
-  applesTotal : 0,
+  applesRedTotal : 0,
   imgBasket : './images/basket.png',
   imgAppleRed : './images/manzana.png',
   imgAppleRotten : './images/badapple.png',
@@ -44,7 +44,7 @@ const myGameArea = {
   score: function () {
     this.context.font = '20px serif',
     this.context.fillStyle = 'black',
-    this.context.fillText(`${this.applesTotal}`, 0, 0)
+    this.context.fillText(`${this.applesRedTotal}`, 0, 0)
 },
 }
 
@@ -84,16 +84,16 @@ class Components {
   }
 
   bottom() {
-    return this.y + this.height 
+    return this.y + this.height
   }
-  
+
   //Metodo para conteo de manzanas
   crashWith(apples) {
     return !(
-      this.bottom() < apples.top() || 
-      this.top() > apples.bottom() || 
+      this.bottom() < apples.top() ||
+      this.top() > apples.bottom() ||
       this.right() < apples.left() ||
-      this.left() > apples.right()); 
+      this.left() > apples.right());
   }
 }
 
@@ -102,15 +102,16 @@ function updateGameArea () {
   myGameArea.clear(); //Limpia canvas
   imgCanvasBack.update();//inserta imagen de inicio en el fondo
   drawLives(myGameArea.lives)//llama a función con # de vidas
-  // imgApple.update();
   imgBasketObj.update();//inserta imagen a una frecuencia determinada
   imgBasketObj.newPos();//Actualiza la posición de la canasta
   ApplesRandom();//Función imprime manzanas aleatoramiente
   RottenRandom(); //Caen manzanas podridas del cielo
   GoldenRandom() //Caen manzanas doradas del cielo
   deleteApples(myApples);
+  deleteApples(rottenApples);
+  deleteApples(goldenApples);
   applesCatches(myApples, imgBasketObj);
-  // console.log(myGameArea.applesTotal);
+  myGameArea.score();
 }
 
 //Generación de manzanas
@@ -184,8 +185,8 @@ function drawLives(lives) {
 }
 
 //Función conteo de manzanas atrapadas
- const appleInBasket = [];
 function applesCatches (arrApples, imgObj) {
+<<<<<<< HEAD
     let collisionCount = 0;
     for(let i=0; i< arrApples.length;) {
       applesCatches.removeChild(myApples[i]);
@@ -194,11 +195,16 @@ function applesCatches (arrApples, imgObj) {
 /*  const touch = arrApples.some((apples) => {
       return imgObj.crashWith(apples)
   })
+=======
+>>>>>>> 9a48590c761160ff0c8cbf3b9508766a6c95d415
   for (let i = 0; i < arrApples.length; i++) {
-    if (touch) {
-      appleInBasket.push(arrApples[i])
+    if (imgObj.crashWith(arrApples[i])) {
       arrApples.splice(i, 1)
+<<<<<<< HEAD
       console.log(appleInBasket.length)
+=======
+      myGameArea.applesRedTotal += 1;
+>>>>>>> 9a48590c761160ff0c8cbf3b9508766a6c95d415
     }
   }
 }
