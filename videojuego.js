@@ -8,6 +8,7 @@ botonRestart.textContent = "Volver a Jugar"
 const startGameButtom = document.getElementById('inicio');
 if (startGameButtom) {
   startGameButtom.addEventListener('click', e =>{
+    e.preventDefault()
     while (instrucciones.hasChildNodes()) {
     instrucciones.removeChild(instrucciones.firstChild)
     }
@@ -32,8 +33,8 @@ const myGameArea = {
   imgAppleGold : './images/golden-apple.png',
   imgCanvasBack : './images/fondo.png',
   imgLives : './images/heart.png',
-  imgGO : './images/perdiste.png',
-  imgWin : './images/minimo.png',
+  // imgGO : './images/perdiste.png',
+  // imgWin : './images/minimo.png',
   lives : 3,
   nivel1Red : 0,
   nivel2Red : 2,
@@ -52,9 +53,6 @@ const myGameArea = {
   start : function () {
     this.interval = setInterval(updateGameArea, 1000/60);
   },
-  start : function () {
-    this.interval = setInterval(updateGameArea, 1000/60);
-  },
   stop : function () {
     clearInterval(this.interval);
   },
@@ -68,9 +66,16 @@ const myGameArea = {
   },
   gameOver : function () {
     if (this.lives == 0) {
-      return true
+      return true;
     }else {
-      return false
+      return false;
+    }
+  },
+  win : function () {
+    if (this.applesRedTotal == 15) {
+      return true;
+    }else {
+      return false;
     }
   }
 }
@@ -83,13 +88,17 @@ class Components {
     this.x = x;
     this.y = y;
     this.speedX = 0;
+    this.imgGameOver = new Image();
+    this.imgGameOver.src = './images/perdiste.png';
+    this.imgWinner = new Image();
+    this.imgWinner.src = './images/minimo.png'
+    this.ctx = context;
   }
    //Metodos para la impresión de imagenes en el canvas.
   update () {
-    const ctx = myGameArea.context;
     let img = new Image();
     img.src = this.imgLink;
-    ctx.drawImage(img, this.x, this.y, this.width, this.height);
+    this.ctx.drawImage(img, this.x, this.y, this.width, this.height);
   }
 
   //Movimiento de la canasta (horizontal)
@@ -101,15 +110,12 @@ class Components {
   left() {
     return this.x +15
   }
-
   right() {
     return this.x + this.width -15
   }
-
   top() {
     return this.y + 25
   }
-
   bottom() {
     return this.y + this.height -25
   }
@@ -122,9 +128,19 @@ class Components {
       this.right() < apples.left() ||
       this.left() > apples.right());
   }
+
+  //Método GameOver para imprimir imágen
+  printGameOver() {
+    this.ctx.drawImage(this.imgGameOver, 0, 0, 1000, 500);
+  }
+
+  printWinner() {
+    this.ctx.drawImage(this.imgWinner, 0, 0, 1000, 500);
+  }
 }
 
 //Motor del juego
+
 function updateGameArea () {
   myGameArea.clear(); //Limpia canvas
   drawLives(myGameArea.lives)//llama a función con # de vidas
@@ -140,23 +156,24 @@ function updateGameArea () {
   applesCatches(goldenApples, imgBasketObj);
   imgOneAppleRed.update();
   myGameArea.score();
-  win();
+  winner();
   gameOver();
+  stopGame();
 }
 
 //Función niveles
 
 function niveles () {
-  if (myGameArea.applesRedTotal < 5) {
+  if (myGameArea.applesRedTotal < 4) {
     ApplesRandom(myGameArea.nivel1Red);//Función imprime manzanas aleatoramiente
     RottenRandom(myGameArea.nivel1Rotten); //Caen manzanas podridas del cielo
-  }else if (myGameArea.applesRedTotal > 4 && myGameArea.applesRedTotal < 10) {
+  }else if (myGameArea.applesRedTotal > 3 && myGameArea.applesRedTotal < 8) {
     ApplesRandom(myGameArea.nivel2Red);//Función imprime manzanas aleatoramiente
     RottenRandom(myGameArea.nivel2Rotten); //Caen manzanas podridas del cielo
-  }else if (myGameArea.applesRedTotal > 9 && myGameArea.applesRedTotal < 14) {
+  }else if (myGameArea.applesRedTotal > 7 && myGameArea.applesRedTotal < 11) {
     ApplesRandom(myGameArea.nivel3Red);//Función imprime manzanas aleatoramiente
     RottenRandom(myGameArea.nivel3Rotten); //Caen manzanas podridas del cielo
-  }else if (myGameArea.applesRedTotal > 13 ) {
+  }else if (myGameArea.applesRedTotal > 10 ) {
     ApplesRandom(myGameArea.nivel4Red);//Función imprime manzanas aleatoramiente
     RottenRandom(myGameArea.nivel4Rotten); //Caen manzanas podridas del cielo
   }
@@ -179,7 +196,9 @@ function ApplesRandom (nivel) {
     myApples.push (new Components(width, -10, myGameArea.imgAppleRed, 50, 50))
   }
 }
+
 //Generación de manzanas podridas
+
 const rottenApples = [];
 function RottenRandom (nivel) {
   for (let i = 0; i < rottenApples.length; i++) {
@@ -195,7 +214,9 @@ function RottenRandom (nivel) {
     rottenApples.push (new Components(width, -10, myGameArea.imgAppleRotten, 50, 50))
   }
 }
+
 // Generación manzanas doradas
+
 const goldenApples = [];
 function GoldenRandom () {
   for (let i = 0; i < goldenApples.length; i++) {
@@ -203,7 +224,7 @@ function GoldenRandom () {
     goldenApples[i].update();
   }
   myGameArea.frameAppleGold += 1;
-  if (myGameArea.frameAppleGold % 2100 === 0) {
+  if (myGameArea.frameAppleGold % 580 === 0) {
     let minWidth = 0;
     let maxWidth = 950;
     let width =  Math.floor(Math.random() * (maxWidth - minWidth));
@@ -211,7 +232,6 @@ function GoldenRandom () {
     goldenApples.push (new Components(width, -10, myGameArea.imgAppleGold, 50, 50))
   }
 }
-
 
 //Función borrar manzanas fuera del canvas
 
@@ -259,56 +279,49 @@ function applesCatches (arrApples, imgObj) {
   }
 }
 
+
 //Función Win e impresión de imágen ganador
 
-function win () {
-  if (myGameArea.applesRedTotal == 20) {
-    imgWin.update();
-    myGameArea.stop();
-    instrucciones.appendChild(botonRestart);
-    restartGame();
-
+function winner () {
+  if (myGameArea.win()) {
+    components.printWinner();
+    return true;
   }
-  // else if (myGameArea.applesRedTotal > 19) {
-  //   imgWin.update();
-  //   myGameArea.stop();
-  //   instrucciones.appendChild(botonRestart);
-  // }
 }
 
 //Función GameOver e impresión de imágen perdedor
 function gameOver () {
-  if (myGameArea.lives == 0) {
-    imgGameOver.update();
-    myGameArea.stop();
-    instrucciones.appendChild(botonRestart);
-    restartGame();
+  if (myGameArea.gameOver()) {
+    components.printGameOver();
+    return true;
   }
-  // else if (myGameArea.lives < 0) {
-  //   myGameArea.stop();
-  //   imgGameOver.update();
-  //   instrucciones.appendChild(botonRestart);
-  // }
+}
+
+//Función stop 
+
+function stopGame () {
+  if (winner() || gameOver()) {
+    myGameArea.stop();
+  }
 }
 
 //Funcion restart juego
 
-function restartGame () {
-  const restartGameButtom = document.getElementById('restart');
-  if (restartGameButtom) {
-    restartGameButtom.addEventListener('click', e =>{
-      myGameArea.clear();
-      myGameArea.start();
-    })
-  }
-}
+// function restartGame () {
+//   const restartGameButtom = document.getElementById('restart');
+//   if (restartGameButtom) {
+//     restartGameButtom.addEventListener('click', e =>{
+//       e.preventDefault()
+//       myGameArea.clear();
+//       myGameArea.start();
+//     })
+//   }
+// }
 
 //Inicialización de clase Constructor con imágenes
 const imgBasketObj = new Components (425, 400, myGameArea.imgBasket, 100, 100);
 const imgOneAppleRed = new Components (0, 0, myGameArea.imgAppleRed, 80, 80);
-const imgGameOver = new Components(0, 0, myGameArea.imgGO, 1000, 500)
-const imgWin = new Components(0, 0, myGameArea.imgWin, 1000, 500)
-
+let components = new Components();
 
 
 //Movimiento de la canasta
