@@ -29,13 +29,24 @@ const myGameArea = {
   imgAppleGold : './images/golden-apple.png',
   imgCanvasBack : './images/fondo.png',
   imgLives : './images/heart.png',
-  imgGO : '',
+  imgGO : './images/perdiste.png',
   lives : 5,
+  nivel1Red : 0,
+  nivel2Red : 2,
+  nivel3Red : 4,
+  nivel4Red : 8,
+  nivel1Rotten : 0,
+  nivel2Rotten : 3,
+  nivel3Rotten : 5,
+  nivel4Rotten : 10,
   board : function () {
     this.canvas.width = 1200;
     this.canvas.height = 600;
     canvas.setAttribute('id', 'canvas1')
     instrucciones.appendChild(this.canvas);
+  },
+  start : function () {
+    this.interval = setInterval(updateGameArea, 1000/60);
   },
   start : function () {
     this.interval = setInterval(updateGameArea, 1000/60);
@@ -115,8 +126,7 @@ function updateGameArea () {
   drawLives(myGameArea.lives)//llama a función con # de vidas
   imgBasketObj.update();//inserta imagen a una frecuencia determinada
   imgBasketObj.newPos();//Actualiza la posición de la canasta
-  ApplesRandom();//Función imprime manzanas aleatoramiente
-  RottenRandom(); //Caen manzanas podridas del cielo
+  niveles();
   GoldenRandom(); //Caen manzanas doradas del cielo
   deleteApples(myApples);
   deleteApples(rottenApples);
@@ -129,12 +139,30 @@ function updateGameArea () {
   gameOver();
 }
 
+//Función niveles
+
+function niveles () {
+  if (myGameArea.applesRedTotal < 5) {
+    ApplesRandom(myGameArea.nivel1Red);//Función imprime manzanas aleatoramiente
+    RottenRandom(myGameArea.nivel1Rotten); //Caen manzanas podridas del cielo
+  }else if (myGameArea.applesRedTotal > 4 && myGameArea.applesRedTotal < 10) {
+    ApplesRandom(myGameArea.nivel2Red);//Función imprime manzanas aleatoramiente
+    RottenRandom(myGameArea.nivel2Rotten); //Caen manzanas podridas del cielo
+  }else if (myGameArea.applesRedTotal > 9 && myGameArea.applesRedTotal < 14) {
+    ApplesRandom(myGameArea.nivel3Red);//Función imprime manzanas aleatoramiente
+    RottenRandom(myGameArea.nivel3Rotten); //Caen manzanas podridas del cielo
+  }else if (myGameArea.applesRedTotal > 13 ) {
+    ApplesRandom(myGameArea.nivel4Red);//Función imprime manzanas aleatoramiente
+    RottenRandom(myGameArea.nivel4Rotten); //Caen manzanas podridas del cielo
+  }
+}
+
 //Generación de manzanas
 
 const myApples = [];
-function ApplesRandom () {
+function ApplesRandom (nivel) {
   for (let i = 0; i < myApples.length; i++) {
-    myApples[i].y += 1;
+    myApples[i].y += 1 + nivel;
     myApples[i].update();
   }
   myGameArea.frameAppleRed += 1;
@@ -148,13 +176,13 @@ function ApplesRandom () {
 }
 //Generación de manzanas podridas
 const rottenApples = [];
-function RottenRandom () {
+function RottenRandom (nivel) {
   for (let i = 0; i < rottenApples.length; i++) {
-    rottenApples[i].y += 1;
+    rottenApples[i].y += 1 + nivel;
     rottenApples[i].update();
   }
   myGameArea.frameAppleRotten += 1;
-  if (myGameArea.frameAppleRotten % 200 === 0) {
+  if (myGameArea.frameAppleRotten % 150 === 0) {
     let minWidth = 0;
     let maxWidth = 1150;
     let width =  Math.floor(Math.random() * (maxWidth - minWidth));
@@ -227,7 +255,9 @@ function applesCatches (arrApples, imgObj) {
 }
 
 function gameOver () {
-  if (myGameArea.gameOver()) {
+  if (myGameArea.lives == 0) {
+    imgGameOver.update();
+  }else if (myGameArea.lives < 0) {
     myGameArea.stop();
     imgGameOver.update();
   }
