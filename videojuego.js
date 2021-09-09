@@ -29,6 +29,7 @@ const myGameArea = {
   imgAppleGold : './images/golden-apple.png',
   imgCanvasBack : './images/fondo.png',
   imgLives : './images/heart.png',
+  imgGO : '',
   lives : 5,
   board : function () {
     this.canvas.width = 1200;
@@ -39,15 +40,24 @@ const myGameArea = {
   start : function () {
     this.interval = setInterval(updateGameArea, 1000/60);
   },
-
+  stop : function () {
+    clearInterval(this.interval);
+  },
   clear : function () {
     context.clearRect(0, 0, canvas.width, canvas.height );
   },
   score : function () {
-    this.context.font = '35px serif',
+    this.context.font = '30px serif',
     this.context.fillStyle = 'white',
     this.context.fillText(` x ${this.applesRedTotal}`, 0, 60)
   },
+  gameOver : function () {
+    if (this.lives == 0) {
+      return true
+    }else {
+      return false
+    }
+  }
 }
 
 class Components {
@@ -74,19 +84,19 @@ class Components {
 
   //Métodos para colisión (atrapar manzanas)
   left() {
-    return this.x
+    return this.x +15
   }
 
   right() {
-    return this.x + this.width
+    return this.x + this.width -15
   }
 
   top() {
-    return this.y
+    return this.y + 25
   }
 
   bottom() {
-    return this.y + this.height
+    return this.y + this.height -25
   }
 
   //Metodo para conteo de manzanas
@@ -117,6 +127,7 @@ function updateGameArea () {
   applesCatches(goldenApples, imgBasketObj);
   imgOneAppleRed.update();
   myGameArea.score();
+  gameOver();
 }
 
 //Generación de manzanas
@@ -128,7 +139,7 @@ function ApplesRandom () {
     myApples[i].update();
   }
   myGameArea.frameAppleRed += 1;
-  if (myGameArea.frameAppleRed % 150 == 0) {
+  if (myGameArea.frameAppleRed % 100 == 0) {
     let minWidth = 0;
     let maxWidth = 1150;
     let width =  Math.floor(Math.random() * (maxWidth - minWidth));
@@ -143,7 +154,7 @@ function RottenRandom () {
     rottenApples[i].y += 1;
     rottenApples[i].update();
   }
-  myGameArea.frameAppleRotten += 5;
+  myGameArea.frameAppleRotten += 1;
   if (myGameArea.frameAppleRotten % 200 === 0) {
     let minWidth = 0;
     let maxWidth = 1150;
@@ -184,8 +195,8 @@ function deleteApples (arrApples) {
 //Generador de imágenes de vidas
 function drawLives(lives) {
   for (let i = 0; i < lives; i++ ) {
-  const imgLivesObj = new Components (1150 - i * 50 , 0, myGameArea.imgLives, 50, 50);
-  imgLivesObj.update()
+    const imgLivesObj = new Components (1150 - i * 50 , 0, myGameArea.imgLives, 50, 50);
+    imgLivesObj.update()
   }
 }
 
@@ -216,10 +227,18 @@ function applesCatches (arrApples, imgObj) {
   }
 }
 
+function gameOver () {
+  if (myGameArea.gameOver()) {
+    myGameArea.stop();
+    imgGameOver.update();
+  }
+}
+
 //Inicialización de clase Constructor con imágenes
 const imgCanvasBack = new Components (0, 0, myGameArea.imgCanvasBack, 1200, 600)
 const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
 const imgOneAppleRed = new Components (0, 0, myGameArea.imgAppleRed, 80, 80);
+const imgGameOver = new Components(0, 0, myGameArea.imgGO, 1200, 600)
 
 
 
