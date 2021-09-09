@@ -30,7 +30,8 @@ const myGameArea = {
   imgCanvasBack : './images/fondo.png',
   imgLives : './images/heart.png',
   imgGO : './images/perdiste.png',
-  lives : 5,
+  imgWin : './images/minimo.png',
+  lives : 3,
   nivel1Red : 0,
   nivel2Red : 2,
   nivel3Red : 4,
@@ -136,6 +137,7 @@ function updateGameArea () {
   applesCatches(goldenApples, imgBasketObj);
   imgOneAppleRed.update();
   myGameArea.score();
+  win();
   gameOver();
 }
 
@@ -181,7 +183,7 @@ function RottenRandom (nivel) {
     rottenApples[i].y += 1 + nivel;
     rottenApples[i].update();
   }
-  myGameArea.frameAppleRotten += 1;
+  myGameArea.frameAppleRotten += 3;
   if (myGameArea.frameAppleRotten % 150 === 0) {
     let minWidth = 0;
     let maxWidth = 1150;
@@ -254,6 +256,18 @@ function applesCatches (arrApples, imgObj) {
   }
 }
 
+//Función Win e impresión de imágen ganador
+
+function win () {
+  if (myGameArea.applesRedTotal == 20) {
+    imgWin.update();
+  }else if (myGameArea.applesRedTotal > 20) {
+    myGameArea.stop();
+    imgWin.update();
+  }
+}
+
+//Función GameOver e impresión de imágen perdedor
 function gameOver () {
   if (myGameArea.lives == 0) {
     imgGameOver.update();
@@ -267,6 +281,7 @@ function gameOver () {
 const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
 const imgOneAppleRed = new Components (0, 0, myGameArea.imgAppleRed, 80, 80);
 const imgGameOver = new Components(0, 0, myGameArea.imgGO, 1200, 600)
+const imgWin = new Components(0, 0, myGameArea.imgWin, 1200, 600)
 
 
 
