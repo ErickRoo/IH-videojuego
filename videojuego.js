@@ -33,13 +33,8 @@ const myGameArea = {
   imgAppleGold : './images/golden-apple.png',
   imgCanvasBack : './images/fondo.png',
   imgLives : './images/heart.png',
-<<<<<<< HEAD
-  imgGO : './images/ganadorbg.png',
-  imgWin : './images/ganador.jpeg',
-=======
   // imgGO : './images/perdiste.png',
   // imgWin : './images/minimo.png',
->>>>>>> 33a3c3ef514feee6c79fd8c97965e62c34042747
   lives : 3,
   nivel1Red : 0,
   nivel2Red : 2,
