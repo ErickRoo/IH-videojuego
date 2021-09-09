@@ -1,6 +1,9 @@
-let canvas = document.createElement('canvas')
+let canvas = document.createElement('canvas');
 let context = canvas.getContext('2d');
 let instrucciones = document.getElementById('instrucciones');
+let botonRestart = document.createElement('button');
+botonRestart.id = 'restart';
+botonRestart.textContent = "Volver a Jugar"
 
 const startGameButtom = document.getElementById('inicio');
 if (startGameButtom) {
@@ -41,8 +44,8 @@ const myGameArea = {
   nivel3Rotten : 5,
   nivel4Rotten : 10,
   board : function () {
-    this.canvas.width = 1200;
-    this.canvas.height = 600;
+    this.canvas.width = 1000;
+    this.canvas.height = 500;
     canvas.setAttribute('id', 'canvas1')
     instrucciones.appendChild(this.canvas);
   },
@@ -170,7 +173,7 @@ function ApplesRandom (nivel) {
   myGameArea.frameAppleRed += 1;
   if (myGameArea.frameAppleRed % 100 == 0) {
     let minWidth = 0;
-    let maxWidth = 1150;
+    let maxWidth = 950;
     let width =  Math.floor(Math.random() * (maxWidth - minWidth));
 
     myApples.push (new Components(width, -10, myGameArea.imgAppleRed, 50, 50))
@@ -186,7 +189,7 @@ function RottenRandom (nivel) {
   myGameArea.frameAppleRotten += 3;
   if (myGameArea.frameAppleRotten % 150 === 0) {
     let minWidth = 0;
-    let maxWidth = 1150;
+    let maxWidth = 950;
     let width =  Math.floor(Math.random() * (maxWidth - minWidth));
 
     rottenApples.push (new Components(width, -10, myGameArea.imgAppleRotten, 50, 50))
@@ -202,7 +205,7 @@ function GoldenRandom () {
   myGameArea.frameAppleGold += 1;
   if (myGameArea.frameAppleGold % 2100 === 0) {
     let minWidth = 0;
-    let maxWidth = 1150;
+    let maxWidth = 950;
     let width =  Math.floor(Math.random() * (maxWidth - minWidth));
 
     goldenApples.push (new Components(width, -10, myGameArea.imgAppleGold, 50, 50))
@@ -224,7 +227,7 @@ function deleteApples (arrApples) {
 //Generador de imágenes de vidas
 function drawLives(lives) {
   for (let i = 0; i < lives; i++ ) {
-    const imgLivesObj = new Components (1150 - i * 50 , 0, myGameArea.imgLives, 50, 50);
+    const imgLivesObj = new Components (950 - i * 50 , 0, myGameArea.imgLives, 50, 50);
     imgLivesObj.update()
   }
 }
@@ -247,7 +250,7 @@ function applesCatches (arrApples, imgObj) {
 
         case goldenApples:
           myGameArea.applesGoldTotal +=1;
-          if (myGameArea.lives < 5) {
+          if (myGameArea.lives < 3) {
             myGameArea.lives += 1;
           }
         break;
@@ -261,27 +264,50 @@ function applesCatches (arrApples, imgObj) {
 function win () {
   if (myGameArea.applesRedTotal == 20) {
     imgWin.update();
-  }else if (myGameArea.applesRedTotal > 20) {
     myGameArea.stop();
-    imgWin.update();
+    instrucciones.appendChild(botonRestart);
+    restartGame();
+
   }
+  // else if (myGameArea.applesRedTotal > 19) {
+  //   imgWin.update();
+  //   myGameArea.stop();
+  //   instrucciones.appendChild(botonRestart);
+  // }
 }
 
 //Función GameOver e impresión de imágen perdedor
 function gameOver () {
   if (myGameArea.lives == 0) {
     imgGameOver.update();
-  }else if (myGameArea.lives < 0) {
     myGameArea.stop();
-    imgGameOver.update();
+    instrucciones.appendChild(botonRestart);
+    restartGame();
+  }
+  // else if (myGameArea.lives < 0) {
+  //   myGameArea.stop();
+  //   imgGameOver.update();
+  //   instrucciones.appendChild(botonRestart);
+  // }
+}
+
+//Funcion restart juego
+
+function restartGame () {
+  const restartGameButtom = document.getElementById('restart');
+  if (restartGameButtom) {
+    restartGameButtom.addEventListener('click', e =>{
+      myGameArea.clear();
+      myGameArea.start();
+    })
   }
 }
 
 //Inicialización de clase Constructor con imágenes
-const imgBasketObj = new Components (500, 490, myGameArea.imgBasket, 100, 100);
+const imgBasketObj = new Components (425, 400, myGameArea.imgBasket, 100, 100);
 const imgOneAppleRed = new Components (0, 0, myGameArea.imgAppleRed, 80, 80);
-const imgGameOver = new Components(0, 0, myGameArea.imgGO, 1200, 600)
-const imgWin = new Components(0, 0, myGameArea.imgWin, 1200, 600)
+const imgGameOver = new Components(0, 0, myGameArea.imgGO, 1000, 500)
+const imgWin = new Components(0, 0, myGameArea.imgWin, 1000, 500)
 
 
 

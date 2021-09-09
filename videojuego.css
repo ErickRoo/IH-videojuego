@@ -8,38 +8,23 @@ html {
     background-repeat: no-repeat;
 }
 h1 {
-    font-size: 30px;
+    font-size: 2rem;
     text-align: center;
     text-shadow: rgb(168, 138, 16) 1px 0 10px;
 }
 h2, p {
-    display: flex;
-    justify-content:center;
-    align-content: center;
+    font-size: 1.5rem;
+    text-align: center;
+    width: 60%;
     text-shadow: rgb(71, 58, 4) 1px 0 10px;
 }
-#instrucciones ul li{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-content:center;
-    font-size: 16px;
-    text-shadow: rgb(75, 61, 5) 1px 0 10px;
-    margin: 2%;
-    font-weight: bold;
-    color: rgb(46, 26, 2);
-    line-height: 20pt;
-}
-#inicio {
+#inicio, #restart {
     background-color: #ff0707; 
     border: 1px solid white;
     color: white;
     padding: 15px 32px;
     text-align: center;
     font-size: 18px;
-    display: flex;
-    justify-content: center;
-    align-content: center;
   }
   div.transbox {
     margin: 8px;
@@ -47,11 +32,6 @@ h2, p {
     border: 2px solid rgb(83, 46, 0);
     opacity: 0.8;
     height: 200;
-  }
-  .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   #canvas1 {
     border: 1px solid black;
@@ -61,10 +41,25 @@ h2, p {
   section {
     display: flex;
     align-items: center;
-    align-content: center;
-    flex-direction: column;
+    flex-flow: column nowrap;
+  }
+  #instrucciones {
+      width: 70%;
+      height: 500px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      justify-content: space-evenly;
+  }
+  #lista-instruc {
+    padding: 10px 5rem;
+    text-shadow: rgb(75, 61, 5) 1px 0 10px;
+    font-weight: bold;
+    color: rgb(46, 26, 2);
+    line-height: 20pt;
   }
   #audio {
+      height: 1rem;
     position: absolute;
     top: 10px;
     left: 15px;
