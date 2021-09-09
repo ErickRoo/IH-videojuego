@@ -5,6 +5,7 @@ html {
     color: rgb(83, 46, 0);
     background-image: url("./images/instrucciones.jpeg");
     background-size: cover;
+    background-repeat: no-repeat;
 }
 h1 {
     font-size: 30px;
@@ -48,13 +49,14 @@ h2, p {
     height: 200;
   }
   .button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   #canvas1 {
-      border: 1px solid black;
-      background-image: url("./images/fondo.png");
+    border: 1px solid black;
+    background-image: url("./images/fondo.png");
+    background-size: 1200px 600px;
   }
   section {
     display: flex;
@@ -62,3 +64,9 @@ h2, p {
     align-content: center;
     flex-direction: column;
   }
+  #audio {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    opacity: 0.2;
+    }
