@@ -39,14 +39,15 @@ h2, p {
     background-image: url("./images/fondo.png");
     background-size: 1200px 600px;
   }
-  section {
+  #contenido {
+      height: 650px;
     display: flex;
     align-items: center;
     flex-flow: column nowrap;
   }
   #instrucciones {
-      width: 70%;
-      height: 500px;
+      width: 100%;
+      height: auto;
       display: flex;
       flex-flow: column nowrap;
       align-items: center;
@@ -61,8 +62,12 @@ h2, p {
   }
   #audio {
       height: 1rem;
-    position: absolute;
+    /* position: absolute; */
     top: 10px;
     left: 15px;
     opacity: 0.2;
+    }
+
+    #bite, #bad, #powerup, #moo, #farmwin {
+        display: none;
     }
