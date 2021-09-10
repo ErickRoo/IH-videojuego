@@ -7,47 +7,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./videojuego.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
   <title>Let's go!!! Apple Picking</title>
 </head>
-<body>
-  
-  
-  <section id="contenido">
+  <body>
+    <section id="contenido">
+      <div>
+        <h1>Let's go!!! Apple Picking 🍎</h1>
+      </div>
 
-    <div>
-      <h1>Let's go!!! Apple Picking 🍎</h1>
-    </div>
-
-    <div id="instrucciones">
-      <p>“La máquina de la granja se averió, ¡ayuda a los granjeros a recolectar todas las canastas de manzanas posibles! "</p>
-      <h2>Instrucciones:</h2>
-        <div class="transbox">
-          <ul id="lista-instruc" class= "list">
-            <li>🍎  Llena las canastas con manzanas moviéndote con las flechas ⬅ y ➡ .</li>
-            <li>🍎  No dejes que caigan en la canasta manzanas podridas, te quitarán una vida.</li>
-            <li>🍎  Atrapa las manzanas doradas ¡te dan una vida extra!</li>
-            <li>🍎  Necesitas llenar la dotación mínima de manzanas (15).</li>
-          </ul>
-        </div>
-        <div class="button">
-          <button id="inicio">Empezar Juego</button>
-        </div>
-    </div>
-  </section>
-  
-  <section>
-    <div>
-      <audio id="audio" controls autoplay loop src="./audio/audio.mp3" ></audio>
-      <audio id="bite" src="./audio/biteapple.wav" controls></audio>
-      <audio id="bad" src="./audio/bad.mp3" controls></audio>
-      <audio id="powerup" src="./audio/powerup.wav" controls></audio>
-      <audio id="moo" src="./audio/moo.wav" controls></audio>
-      <audio id="farmwin" src="./audio/farmwin.wav" controls></audio>
-    </div>
-  </section>
-
-  <script src="./videojuego.js"></script>
-</body>
+      <div id="instrucciones">
+        <p>“La máquina de la granja se averió, ¡ayuda a los granjeros a recolectar todas las canastas de manzanas posibles! "</p>
+        <h2>Instrucciones:</h2>
+          <div class="transbox">
+            <ul id="lista-instruc" class= "list">
+              <li>🍎  Llena las canastas con manzanas moviéndote con las flechas <img src="./images/izq.png" class="teclas">  y <img src="./images/der.png" class="teclas"> .</li>
+              <li>🍎  No dejes que caigan en la canasta manzanas podridas, te quitarán una vida.</li>
+              <li>🍎  Atrapa las manzanas doradas ¡te dan una vida extra!</li>
+              <li>🍎  Necesitas llenar la dotación mínima de manzanas (15).</li>
+            </ul>
+          </div>
+          <div class="button">
+            <button id="inicio">Empezar Juego</button>
+          </div>
+      </div>
+    </section>
+    
+    <section>
+      <div>
+        <audio id="audio" controls autoplay loop src="./audio/audio.mp3" ></audio>
+        <audio id="bite" src="./audio/biteapple.wav" controls></audio>
+        <audio id="bad" src="./audio/bad.mp3" controls></audio>
+        <audio id="powerup" src="./audio/powerup.wav" controls></audio>
+        <audio id="moo" src="./audio/moo.wav" controls></audio>
+        <audio id="farmwin" src="./audio/farmwin.wav" controls></audio>
+      </div>
+    </section>
+    <script src="./videojuego.js"></script>
+  </body>
 </html>

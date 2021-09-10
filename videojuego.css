@@ -1,73 +1,87 @@
 /*CSS*/
 html {
-    font-family: 'Poppins', sans-serif;
-    font-size: 18px;
-    color: rgb(83, 46, 0);
-    background-image: url("./images/instrucciones.jpeg");
-    background-size: cover;
-    background-repeat: no-repeat;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  background-image: url("./images/instrucciones.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 h1 {
-    font-size: 2rem;
-    text-align: center;
-    text-shadow: rgb(168, 138, 16) 1px 0 10px;
+  font-size: 3rem;
+  text-align: center;
+  color: white;
+  text-shadow: rgb(47, 12, 12) 5px 5px 10px;
 }
-h2, p {
-    font-size: 1.5rem;
-    text-align: center;
-    width: 60%;
-    text-shadow: rgb(71, 58, 4) 1px 0 10px;
+h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  width: 60%;
+  text-shadow: rgb(71, 58, 4) 1px 0 10px;
+}
+#instrucciones p {
+  font-size: 1.5rem;
+  width: 60%;
+  text-align: center;
+  font-weight: 800;
+  text-shadow: 5px 5px 10px white;
 }
 #inicio, #restart {
-    background-color: #ff0707; 
-    border: 1px solid white;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    font-size: 18px;
-  }
-  .transbox {
-    margin: 8px;
-    background-color: #ffffff;
-    border: 2px solid rgb(83, 46, 0);
-    opacity: 0.8;
-    height: 200;
-  }
-  #canvas1 {
-    border: 1px solid black;
-    margin: 1rem 0;
-    background-image: url("./images/fondo.png");
-    background-size: 1200px 600px;
-  }
-  #contenido {
-      height: 650px;
-    display: flex;
-    align-items: center;
-    flex-flow: column nowrap;
-  }
-  #instrucciones {
-      width: 100%;
-      height: auto;
-      display: flex;
-      flex-flow: column nowrap;
-      align-items: center;
-      justify-content: space-evenly;
-  }
-  #lista-instruc {
-    padding: 10px 5rem;
-    text-shadow: rgb(75, 61, 5) 1px 0 10px;
-    font-weight: bold;
-    color: rgb(46, 26, 2);
-    line-height: 20pt;
-  }
-  #audio {
-      height: 1rem;
-    /* position: absolute; */
-    top: 10px;
-    left: 15px;
-    opacity: 0.2;
-    }
+  background-color: #ff0707; 
+  border: 1px solid white;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  font-size: 18px;
+}
+.transbox {
+  margin: 8px;
+  background-color: #ffffff;
+  border: 2px solid rgb(83, 46, 0);
+  opacity: 0.8;
+  height: 200;
+}
+#canvas1 {
+  border: 1px solid black;
+  margin: 1rem 0;
+  background-image: url("./images/fondo.png");
+  background-size: 1200px 600px;
+}
+#contenido {
+  height: 650px;
+  display: flex;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+#instrucciones {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
+#lista-instruc {
+  padding: 10px 5rem;
+  text-shadow: rgb(75, 61, 5) 1px 0 10px;
+  font-weight: bold;
+  color: rgb(46, 26, 2);
+  line-height: 20pt;
+}
+#audio {
+  height: 1rem;
+  /* position: absolute; */
+  top: 10px;
+  left: 15px;
+  opacity: 0.2;
+}
 
-    #bite, #bad, #powerup, #moo, #farmwin {
-        display: none;
-    }
+#bite, #bad, #powerup, #moo, #farmwin {
+  display: none;
+}
+#lista-instruc {
+  list-style: none;
+}
+#lista-instruc .teclas {
+  height: 1.5rem;
+  width: 1.5rem;
+}
