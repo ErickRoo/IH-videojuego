@@ -10,8 +10,23 @@ const bad = document.getElementById('bad');
 const oneUp = document.getElementById('powerup');
 const moo = document.getElementById('moo');
 const farmwin = document.getElementById('farmwin');
-
 const startGameButtom = document.getElementById('inicio');
+
+//Funcion condiciones de sonido
+
+function sound () {
+  audio.volume =0.05;
+  bite.volume =0.3;
+  bad.volume =0.3;
+  oneUp.volume =0.1;
+  moo.volume =0.1;
+  farmwin.volume =0.05;
+  audio.play()
+}
+sound();
+
+// Condición para empezar juego presionando boton start
+
 if (startGameButtom) {
   startGameButtom.addEventListener('click', e =>{
     e.preventDefault()
@@ -77,7 +92,7 @@ const myGameArea = {
     }
   },
   win : function () {
-    if (this.applesRedTotal == 15) {
+    if (this.applesRedTotal == 10) {
       return true;
     }else {
       return false;
