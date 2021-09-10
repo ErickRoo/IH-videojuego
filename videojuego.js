@@ -302,21 +302,34 @@ function gameOver () {
 function stopGame () {
   if (winner() || gameOver()) {
     myGameArea.stop();
+    restartGame();
   }
 }
 
 //Funcion restart juego
 
-// function restartGame () {
-//   const restartGameButtom = document.getElementById('restart');
-//   if (restartGameButtom) {
-//     restartGameButtom.addEventListener('click', e =>{
-//       e.preventDefault()
-//       myGameArea.clear();
-//       myGameArea.start();
-//     })
-//   }
-// }
+function restartGame () {
+  instrucciones.appendChild(botonRestart)
+  const restartGameButtom = document.getElementById('restart');
+  if (restartGameButtom) {
+    restartGameButtom.addEventListener('click', e =>{
+      e.preventDefault()
+      myGameArea.clear();
+      myGameArea.stop();
+      myGameArea.lives = 3;
+      myGameArea.applesRedTotal = 0;
+      console.log(goldenApples.length);
+
+      myApples.splice(0, myApples.length)
+      rottenApples.splice(0, rottenApples.length)
+      goldenApples.splice(0, goldenApples.length)
+      console.log(goldenApples.length);
+      imgBasketObj.x = 425;
+      imgBasketObj.y = 400;
+      myGameArea.start();
+    })
+  }
+}
 
 //Inicialización de clase Constructor con imágenes
 const imgBasketObj = new Components (425, 400, myGameArea.imgBasket, 100, 100);

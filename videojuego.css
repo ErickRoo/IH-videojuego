@@ -26,7 +26,7 @@ h2, p {
     text-align: center;
     font-size: 18px;
   }
-  div.transbox {
+  .transbox {
     margin: 8px;
     background-color: #ffffff;
     border: 2px solid rgb(83, 46, 0);
@@ -35,6 +35,7 @@ h2, p {
   }
   #canvas1 {
     border: 1px solid black;
+    margin: 1rem 0;
     background-image: url("./images/fondo.png");
     background-size: 1200px 600px;
   }
